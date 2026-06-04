@@ -1,0 +1,154 @@
+{
+  "name": "2026_06_04_lesson1",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -416,
+        -160
+      ],
+      "id": "c79e065f-6fb9-4fe0-9da6-b411440cf0ea",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "content": "## 初體驗\n適合初學者的第一個範例",
+        "height": 120,
+        "width": 220,
+        "color": 3
+      },
+      "id": "69cbf0e2-a9f8-43cc-9efe-a7d93d25efef",
+      "name": "初體驗說明",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -496,
+        -400
+      ]
+    },
+    {
+      "parameters": {
+        "content": "取得虛假樣本數據",
+        "height": 260,
+        "width": 220,
+        "color": 5
+      },
+      "id": "0608b1a3-9764-4235-98f2-1ab52f762f2d",
+      "name": "取得虛假樣本數據說明",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        -208
+      ]
+    },
+    {
+      "parameters": {
+        "content": "提取資料並準備好供下一節點使用。",
+        "height": 260,
+        "width": 220,
+        "color": 3
+      },
+      "id": "d8fedd8e-e2e5-440f-a0f1-93fd2aa4ea9c",
+      "name": "提取資料說明",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -16,
+        -224
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "getAllPeople"
+      },
+      "type": "n8n-nodes-base.n8nTrainingCustomerDatastore",
+      "typeVersion": 1,
+      "position": [
+        -208,
+        -160
+      ],
+      "id": "0709618e-d296-4e23-bb57-017ad37ae6c1",
+      "name": "Customer Datastore (n8n training)"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d700e754-7fe2-401a-8856-c611edcfde40",
+              "name": "編號",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "7c23add4-3833-485e-a2a6-4b8bd05b73f2",
+              "name": "姓名",
+              "value": "={{ $json.name }}",
+              "type": "string"
+            },
+            {
+              "id": "eeb55b34-ad9f-4fbf-9c74-a52bdeba7121",
+              "name": "email",
+              "value": "={{ $json.email }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        0,
+        -160
+      ],
+      "id": "39d35fc9-8118-422e-998d-c6c66d6bd395",
+      "name": "Edit Fields"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Customer Datastore (n8n training)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Customer Datastore (n8n training)": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": true
+  },
+  "versionId": "0cea43b2-3b39-4070-816e-16e9424f26b0",
+  "meta": {
+    "aiBuilderAssisted": true,
+    "builderVariant": "mcp",
+    "instanceId": "d135f5bcfa8bdece905b6d778df94a7be68624c12d1878e14ba64eeb17a04d82"
+  },
+  "nodeGroups": [],
+  "id": "XdktnvPREXDal1w1",
+  "tags": []
+}
