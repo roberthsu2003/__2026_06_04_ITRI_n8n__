@@ -5,7 +5,8 @@
         "public": true,
         "initialMessages": "您好，我是課程助教，有什麼問題嗎？",
         "options": {
-          "inputPlaceholder": "請在此輸入您的問題..."
+          "inputPlaceholder": "請在此輸入您的問題...",
+          "responseMode": "streaming"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.chatTrigger",
@@ -17,11 +18,93 @@
       "id": "6181e92a-97ef-4206-8888-87847b985204",
       "name": "When chat message received",
       "webhookId": "73f2c5fe-78cc-4cab-8100-f0827411c6e8"
+    },
+    {
+      "parameters": {
+        "model": "gemma4:31b-cloud",
+        "options": {}
+      },
+      "id": "f75711fe-c99e-44ab-9fff-16d6dabefe6b",
+      "name": "Ollama Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        208,
+        112
+      ],
+      "credentials": {
+        "ollamaApi": {
+          "id": "puHSzMoUUx9WwTbB",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "9e92fb7c-33ba-490e-9829-57a66069889a",
+      "name": "Simple Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        336,
+        144
+      ]
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "你是一個友善的中文助理，請用繁體中文回答使用者的問題。"
+        }
+      },
+      "id": "11ce46f7-3cac-4e3f-b78c-fa80cdf6b939",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        240,
+        -80
+      ]
     }
   ],
-  "connections": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "pinData": {},
   "meta": {
+    "aiBuilderAssisted": true,
+    "builderVariant": "mcp",
     "instanceId": "d135f5bcfa8bdece905b6d778df94a7be68624c12d1878e14ba64eeb17a04d82"
   }
 }
