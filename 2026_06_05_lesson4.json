@@ -1,0 +1,27 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "initialMessages": "您好，我是課程助教，有什麼問題嗎？",
+        "options": {
+          "inputPlaceholder": "請在此輸入您的問題..."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -208,
+        -64
+      ],
+      "id": "6181e92a-97ef-4206-8888-87847b985204",
+      "name": "When chat message received",
+      "webhookId": "73f2c5fe-78cc-4cab-8100-f0827411c6e8"
+    }
+  ],
+  "connections": {},
+  "pinData": {},
+  "meta": {
+    "instanceId": "d135f5bcfa8bdece905b6d778df94a7be68624c12d1878e14ba64eeb17a04d82"
+  }
+}
