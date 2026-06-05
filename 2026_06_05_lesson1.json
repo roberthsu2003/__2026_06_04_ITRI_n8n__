@@ -2,13 +2,13 @@
   "nodes": [
     {
       "parameters": {},
-      "id": "da195305-9d18-4798-a31e-7d81a0c9ec41",
+      "id": "c40baab6-8cbd-490d-b0ec-80b89fc2d229",
       "name": "手動觸發",
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        0,
-        0
+        -64,
+        16
       ]
     },
     {
@@ -22,13 +22,13 @@
           }
         }
       },
-      "id": "25c918e6-be76-4d63-ae45-9832039b43aa",
+      "id": "37fab07c-2e88-4b5e-8264-ef9f76e35241",
       "name": "下載 YouBike 即時資料",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        224,
-        0
+        160,
+        16
       ]
     },
     {
@@ -39,13 +39,26 @@
           "fileName": "=youbike_{{ $now.toFormat('yyyyMMdd_HHmmss') }}.json"
         }
       },
-      "id": "5624e365-05bf-4c29-b7e5-ab788a921796",
+      "id": "20224428-6ebd-4965-a779-7c864813a137",
       "name": "轉成 JSON 檔",
       "type": "n8n-nodes-base.convertToFile",
       "typeVersion": 1.1,
       "position": [
-        448,
+        560,
         0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// 取得所有輸入 item\nconst items = $input.all();\n\n// 有時 API 整個陣列會裝在單一 item 的 json 裡，兩種情況都處理\nlet stations = [];\nif (items.length === 1 && Array.isArray(items[0].json)) {\n  stations = items[0].json;\n} else if (items.length === 1 && Array.isArray(items[0].json.data)) {\n  stations = items[0].json.data;\n} else {\n  stations = items.map((i) => i.json);\n}\n\nreturn stations.map((s) => ({\n  json: {\n    \"站點名稱\": s.sna,\n    \"地址\": s.ar,\n    \"時間\": s.mday,\n    \"區域\": s.sarea,\n    \"車輛數量\": s.Quantity,\n    \"可借車輛數\": s.available_rent_bikes,\n    \"可還車輛數\": s.available_return_bikes\n  }\n}));"
+      },
+      "id": "cb04dc77-613e-48ef-ba25-7ea246461eac",
+      "name": "挑選並改中文欄位",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        384,
+        16
       ]
     }
   ],
@@ -62,6 +75,17 @@
       ]
     },
     "下載 YouBike 即時資料": {
+      "main": [
+        [
+          {
+            "node": "挑選並改中文欄位",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "挑選並改中文欄位": {
       "main": [
         [
           {
