@@ -1,0 +1,82 @@
+{
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "da195305-9d18-4798-a31e-7d81a0c9ec41",
+      "name": "手動觸發",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://tcgbusfs.blob.core.windows.net/dotapp/youbike/v2/youbike_immediate.json",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "25c918e6-be76-4d63-ae45-9832039b43aa",
+      "name": "下載 YouBike 即時資料",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        224,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "toJson",
+        "options": {
+          "format": true,
+          "fileName": "=youbike_{{ $now.toFormat('yyyyMMdd_HHmmss') }}.json"
+        }
+      },
+      "id": "5624e365-05bf-4c29-b7e5-ab788a921796",
+      "name": "轉成 JSON 檔",
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        448,
+        0
+      ]
+    }
+  ],
+  "connections": {
+    "手動觸發": {
+      "main": [
+        [
+          {
+            "node": "下載 YouBike 即時資料",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "下載 YouBike 即時資料": {
+      "main": [
+        [
+          {
+            "node": "轉成 JSON 檔",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "aiBuilderAssisted": true,
+    "builderVariant": "mcp",
+    "instanceId": "d135f5bcfa8bdece905b6d778df94a7be68624c12d1878e14ba64eeb17a04d82"
+  }
+}
